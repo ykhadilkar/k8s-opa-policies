@@ -11,7 +11,7 @@ deny[msg] {
     missing_required_annotations[msg]
 }
 
-# Require use of Security Group sg-123
+# Require use of azure internal lb annotation
 missing_required_annotations[msg] {
     not annotations["service.beta.kubernetes.io/azure-load-balancer-internal"] = "true"
     msg = "Services of type LoadBalancer must use internal load balancer. Use annotation service.beta.kubernetes.io/azure-load-balancer-internal: \"true\""
