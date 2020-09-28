@@ -1,0 +1,38 @@
+{
+    "properties": {
+        "displayName": "Deny external load balancer",
+        "description": "Deny creation of load balancer with external IP",
+        "mode": "all",
+        "parameters": {
+            "effectType": {
+                "type": "string",
+                "defaultValue": "Deny",
+                "allowedValues": [
+                    "Deny",
+                    "Disabled"
+                ],
+                "metadata": {
+                    "displayName": "Effect",
+                    "description": "Enable or disable the execution of the policy"
+                }
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Network/loadBalancers"
+                    },
+                    {
+                        "field": "Microsoft.Network/frontdoors/loadBalancingSettings[*].type",
+                        "equals": "external"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "[parameters('effectType')]"
+            }
+        }
+    }
+}
